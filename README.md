@@ -1,6 +1,6 @@
-# 🎓 Système Réparti d'Assistance Pédagogique & Synchronisation Multi-Écrans
+# 🎓 AI Pedagogical Assistant — Distributed Multi-Screen Real-Time Teaching Platform
 
-> Plateforme intelligente distribuée pour cours magistraux et travaux dirigés universitaires. Intègre une assistance vocale temps réel, un moteur de RAG contextuel indépendant du domaine d'enseignement, un agent de clarification visuelle d'images propulsé par des modèles d'IA locaux (Ollama), et une synchronisation multi-écrans fluide (enseignant, étudiants, vidéoprojecteur).
+> An intelligent distributed platform for university lectures and seminar sessions. Features real-time voice assistance, domain-agnostic contextual RAG, a visual image clarification agent powered by local lightweight AI models (Ollama), and seamless multi-screen synchronization (instructor, students, and video projector).
 
 ---
 
