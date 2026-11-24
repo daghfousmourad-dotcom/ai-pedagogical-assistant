@@ -1,0 +1,17 @@
+{
+    "MLOps_Phase0_colbert-ir_colbertv2.0_vidore_colpali-v1.3": "69be76fd0d6eb8f93ab5fe1f",
+    "MLOps_Phase0_colbert-ir_colbertv2.0_vidore_colpali-v1.2": "69be77a00d6eb8f93ab5fe20",
+    "MLOps_Phase0_colbert-ir_colbertv2.0_vidore_colpali-v1.1": "69be783e0d6eb8f93ab5fe21",
+    "MLOps_Phase0_snowflake_snowflake-arctic-embed-m_vidore_colpali-v1.3": "69be79b10d6eb8f93ab5fe22",
+    "MLOps_Phase0_snowflake_snowflake-arctic-embed-m_vidore_colpali-v1.2": "69be7a5a0d6eb8f93ab5fe23",
+    "MLOps_Phase0_snowflake_snowflake-arctic-embed-m_vidore_colpali-v1.1": "69be7b060d6eb8f93ab5fe24",
+    "MLOps_Phase0_BAAI_bge-small-en-v1.5_vidore_colpali-v1.3": "69be7bb00d6eb8f93ab5fe25",
+    "MLOps_Phase0_BAAI_bge-small-en-v1.5_vidore_colpali-v1.2": "69be7c420d6eb8f93ab5fe26",
+    "MLOps_Phase0_BAAI_bge-small-en-v1.5_vidore_colpali-v1.1": "69be7cc40d6eb8f93ab5fe27",
+    "MLOps_Phase0_jinaai_jina-embeddings-v2-base-en_vidore_colpali-v1.3": "69be7d4e0d6eb8f93ab5fe28",
+    "MLOps_Phase0_jinaai_jina-embeddings-v2-base-en_vidore_colpali-v1.2": "69be7dfa0d6eb8f93ab5fe29",
+    "MLOps_Phase0_jinaai_jina-embeddings-v2-base-en_vidore_colpali-v1.1": "69be7eab0d6eb8f93ab5fe2a",
+    "MLOps_Phase0_sentence-transformers_all-MiniLM-L6-v2_vidore_colpali-v1.3": "69be7f7d0d6eb8f93ab5fe2b",
+    "MLOps_Phase0_sentence-transformers_all-MiniLM-L6-v2_vidore_colpali-v1.2": "69be80010d6eb8f93ab5fe2c",
+    "MLOps_Phase0_sentence-transformers_all-MiniLM-L6-v2_vidore_colpali-v1.1": "69be80790d6eb8f93ab5fe2d"
+}

@@ -1,0 +1,121 @@
+@import "tailwindcss";
+
+@theme {
+  --color-indigo-500: #6366f1;
+  --color-indigo-600: #4f46e5;
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+}
+
+:root {
+  --bg-deep: #0a0a0f;
+  --bg-card: rgba(15, 15, 23, 0.5);
+  --border-glass: rgba(255, 255, 255, 0.05);
+  --accent-glow: rgba(79, 70, 229, 0.4);
+}
+
+body {
+  margin: 0;
+  background-color: var(--bg-deep);
+  color: white;
+  font-family: 'Inter', system-ui, sans-serif;
+  background-image:
+          radial-gradient(at 0% 0%, var(--accent-glow) 0, transparent 50%),
+          radial-gradient(at 100% 100%, rgba(139, 92, 246, 0.3) 0, transparent 50%);
+  min-height: 100vh;
+}
+
+/* Effet de verre réutilisable */
+.glass-effect {
+  background: var(--bg-card);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--border-glass);
+}
+
+/* Style des inputs uniforme */
+.input-field {
+  @apply w-full bg-slate-900/50 border border-white/10 rounded-xl px-4 py-3 text-white
+  outline-none focus:ring-2 focus:ring-indigo-500/50 transition-all;
+}
+
+/* Bouton principal uniforme */
+.btn-primary {
+  @apply bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-3 px-6 rounded-xl
+  transition-all active:scale-95 shadow-lg shadow-indigo-500/20;
+}
+
+/* Boutons et inputs d'édition dans le tableau de bord professeur */
+.edit-btn-mini {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 0.85rem;
+  padding: 4px;
+  margin-left: 0.5rem;
+  color: #00885d;
+  opacity: 0.6;
+  transition: all 0.2s ease-in-out;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  vertical-align: middle;
+  border-radius: 4px;
+}
+.edit-btn-mini:hover {
+  opacity: 1;
+  transform: scale(1.15);
+  background-color: rgba(0, 136, 93, 0.1);
+}
+.inline-input {
+  font-size: 0.8rem;
+  padding: 4px 8px;
+  border-radius: 6px;
+  border: 1px solid rgba(0, 136, 93, 0.3);
+  background-color: #ffffff;
+  color: #00715d;
+  outline: none;
+  font-style: normal;
+  width: 180px;
+  transition: all 0.2s;
+}
+.inline-input:focus {
+  border-color: #00885d;
+  box-shadow: 0 0 0 2px rgba(0, 136, 93, 0.15);
+}
+.save-btn-mini {
+  background: #00885d;
+  color: #ffffff;
+  border: none;
+  border-radius: 4px;
+  width: 24px;
+  height: 24px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 0.8rem;
+  font-weight: bold;
+  transition: all 0.2s;
+}
+.save-btn-mini:hover {
+  background: #00715d;
+  transform: translateY(-1px);
+}
+.cancel-btn-mini {
+  background: #f1416c;
+  color: #ffffff;
+  border: none;
+  border-radius: 4px;
+  width: 24px;
+  height: 24px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 0.8rem;
+  font-weight: bold;
+  transition: all 0.2s;
+}
+.cancel-btn-mini:hover {
+  background: #d82c55;
+  transform: translateY(-1px);
+}

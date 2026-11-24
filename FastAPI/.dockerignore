@@ -1,0 +1,16 @@
+__pycache__
+.venv
+venv
+env
+.git
+.github
+ai_models_cache
+uploads
+*.pyc
+*.pyo
+*.pyd
+.db
+.DS_Store
+node_modules
+dist
+build

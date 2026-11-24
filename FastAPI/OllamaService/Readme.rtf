@@ -1,0 +1,167 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2868
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fnil\fcharset0 HelveticaNeue;\f1\fnil\fcharset0 HelveticaNeue-Bold;\f2\fmodern\fcharset0 Courier;
+}
+{\colortbl;\red255\green255\blue255;\red101\green104\blue135;\red20\green20\blue28;\red132\green135\blue151;
+\red255\green255\blue255;}
+{\*\expandedcolortbl;;\cssrgb\c47059\c48627\c60000;\cssrgb\c10196\c10588\c14902;\cssrgb\c58824\c60000\c65882;
+\cssrgb\c100000\c100000\c100000\c10196;}
+{\*\listtable{\list\listtemplateid1\listhybrid{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat0\levelspace360\levelindent0{\*\levelmarker \{disc\}}{\leveltext\leveltemplateid1\'01\uc0\u8226 ;}{\levelnumbers;}\fi-360\li720\lin720 }{\listname ;}\listid1}
+{\list\listtemplateid2\listhybrid{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat0\levelspace360\levelindent0{\*\levelmarker \{disc\}}{\leveltext\leveltemplateid101\'01\uc0\u8226 ;}{\levelnumbers;}\fi-360\li720\lin720 }{\listname ;}\listid2}
+{\list\listtemplateid3\listhybrid{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat0\levelspace360\levelindent0{\*\levelmarker \{disc\}}{\leveltext\leveltemplateid201\'01\uc0\u8226 ;}{\levelnumbers;}\fi-360\li720\lin720 }{\listname ;}\listid3}
+{\list\listtemplateid4\listhybrid{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat0\levelspace360\levelindent0{\*\levelmarker \{disc\}}{\leveltext\leveltemplateid301\'01\uc0\u8226 ;}{\levelnumbers;}\fi-360\li720\lin720 }{\listname ;}\listid4}
+{\list\listtemplateid5\listhybrid{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat0\levelspace360\levelindent0{\*\levelmarker \{disc\}}{\leveltext\leveltemplateid401\'01\uc0\u8226 ;}{\levelnumbers;}\fi-360\li720\lin720 }{\listname ;}\listid5}
+{\list\listtemplateid6\listhybrid{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat0\levelspace360\levelindent0{\*\levelmarker \{disc\}}{\leveltext\leveltemplateid501\'01\uc0\u8226 ;}{\levelnumbers;}\fi-360\li720\lin720 }{\listname ;}\listid6}
+{\list\listtemplateid7\listhybrid{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat0\levelspace360\levelindent0{\*\levelmarker \{disc\}}{\leveltext\leveltemplateid601\'01\uc0\u8226 ;}{\levelnumbers;}\fi-360\li720\lin720 }{\listname ;}\listid7}}
+{\*\listoverridetable{\listoverride\listid1\listoverridecount0\ls1}{\listoverride\listid2\listoverridecount0\ls2}{\listoverride\listid3\listoverridecount0\ls3}{\listoverride\listid4\listoverridecount0\ls4}{\listoverride\listid5\listoverridecount0\ls5}{\listoverride\listid6\listoverridecount0\ls6}{\listoverride\listid7\listoverridecount0\ls7}}
+\margl1440\margr1440\vieww11520\viewh8400\viewkind0
+\deftab720
+\pard\pardeftab720\sa120\partightenfactor0
+
+\f0\fs27 \cf2 \cb3 \expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 Plan d'Int\'e9gration Ollama (IA Locale SANS Internet)\
+\pard\pardeftab720\partightenfactor0
+
+\fs28 \cf2 Ce plan d\'e9crit la cr\'e9ation d'un service alternatif utilisant Ollama pour remplacer OpenAI, garantissant une souverainet\'e9 totale et une gratuit\'e9 d'usage.\
+\pard\pardeftab720\sa120\partightenfactor0
+
+\fs24 \cf2 1. Nouvelle Structure de Dossier\
+\pard\pardeftab720\sa60\partightenfactor0
+
+\fs21 \cf2 [NEW]\'a0\cb1 \
+\pard\pardeftab720\partightenfactor0
+\cf2 \
+\pard\pardeftab720\sa60\partightenfactor0
+\cf2 \cb3 Dossier OllamaService\
+\pard\pardeftab720\partightenfactor0
+
+\fs28 \cf2 Ce dossier contiendra les clones adapt\'e9s des services IA actuels.\
+\pard\pardeftab720\sa60\partightenfactor0
+
+\fs19\fsmilli9756 \cf2 [NEW]\'a0
+\fs21 \cb1 \
+\pard\pardeftab720\partightenfactor0
+\cf2 \
+\pard\pardeftab720\sa60\partightenfactor0
+\cf2 \cb3 ollama_voice_utils.py
+\fs19\fsmilli9756 \
+\pard\tx220\tx720\pardeftab720\li720\fi-720\partightenfactor0
+\ls1\ilvl0
+\f1\b\fs28 \cf2 \kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	\uc0\u8226 	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 STT
+\f0\b0 \'a0: Conversion via\'a0
+\f2\fs25\fsmilli12600 \cf4 \cb5 \strokec4 faster-whisper
+\f0\fs28 \cf2 \cb3 \strokec2 \'a0(local) au lieu d'OpenAI Whisper API.\cb1 \
+\ls1\ilvl0
+\f1\b \cb3 \kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	\uc0\u8226 	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 TTS
+\f0\b0 \'a0: Utilisation de\'a0
+\f2\fs25\fsmilli12600 \cf4 \cb5 \strokec4 pyttsx3
+\f0\fs28 \cf2 \cb3 \strokec2 \'a0ou\'a0
+\f2\fs25\fsmilli12600 \cf4 \cb5 \strokec4 espeak
+\f0\fs28 \cf2 \cb3 \strokec2 \'a0pour une synth\'e8se vocale hors-ligne.\cb1 \
+\ls1\ilvl0
+\f1\b \cb3 \kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	\uc0\u8226 	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 Intention
+\f0\b0 \'a0: Utilisation du mod\'e8le\'a0
+\f1\b Llama 3 70B
+\f0\b0 \'a0via l'API locale Ollama (
+\f2\fs25\fsmilli12600 \cf4 \cb5 \strokec4 localhost:11434
+\f0\fs28 \cf2 \cb3 \strokec2 ).\cb1 \
+\pard\pardeftab720\sa60\partightenfactor0
+
+\fs19\fsmilli9756 \cf2 \cb3 [NEW]\'a0
+\fs21 \cb1 \
+\pard\pardeftab720\partightenfactor0
+\cf2 \
+\pard\pardeftab720\sa60\partightenfactor0
+\cf2 \cb3 ollama_rag_service.py
+\fs19\fsmilli9756 \
+\pard\tx220\tx720\pardeftab720\li720\fi-720\partightenfactor0
+\ls2\ilvl0
+\fs28 \cf2 \kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	\uc0\u8226 	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 Adaptation du RAG pour utiliser Ollama au lieu d'OpenAI pour la g\'e9n\'e9ration de texte.\cb1 \
+\pard\pardeftab720\sa60\partightenfactor0
+
+\fs19\fsmilli9756 \cf2 \cb3 [NEW]\'a0
+\fs21 \cb1 \
+\pard\pardeftab720\partightenfactor0
+\cf2 \
+\pard\pardeftab720\sa60\partightenfactor0
+\cf2 \cb3 ollama_image_agent.py
+\fs19\fsmilli9756 \
+\pard\tx220\tx720\pardeftab720\li720\fi-720\partightenfactor0
+\ls3\ilvl0
+\fs28 \cf2 \kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	\uc0\u8226 	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 Utilisation du mod\'e8le\'a0
+\f1\b LLaVA
+\f0\b0 \'a0ou\'a0
+\f1\b Llama-3.2-Vision
+\f0\b0 \'a0via Ollama pour l'analyse d'images.\cb1 \
+\pard\pardeftab720\sa120\partightenfactor0
+
+\fs24 \cf2 \cb3 2. Orchestration et Liens\
+\pard\pardeftab720\sa60\partightenfactor0
+
+\fs21 \cf2 [MODIFY]\'a0\cb1 \
+\pard\pardeftab720\partightenfactor0
+\cf2 \
+\pard\pardeftab720\sa60\partightenfactor0
+\cf2 \cb3 .env\
+\pard\tx220\tx720\pardeftab720\li720\fi-720\partightenfactor0
+\ls4\ilvl0
+\fs28 \cf2 \kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	\uc0\u8226 	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 Ajout de\'a0
+\f2\fs25\fsmilli12600 \cf4 \cb5 \strokec4 AI_PROVIDER=OPENAI
+\f0\fs28 \cf2 \cb3 \strokec2 \'a0(par d\'e9faut).\cb1 \
+\ls4\ilvl0\cb3 \kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	\uc0\u8226 	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 Possibilit\'e9 de passer \'e0\'a0
+\f2\fs25\fsmilli12600 \cf4 \cb5 \strokec4 AI_PROVIDER=OLLAMA
+\f0\fs28 \cf2 \cb3 \strokec2 \'a0pour les tests.\cb1 \
+\pard\pardeftab720\sa60\partightenfactor0
+
+\fs21 \cf2 \cb3 [MODIFY]\'a0\cb1 \
+\pard\pardeftab720\partightenfactor0
+\cf2 \
+\pard\pardeftab720\sa60\partightenfactor0
+\cf2 \cb3 main.py\
+\pard\tx220\tx720\pardeftab720\li720\fi-720\partightenfactor0
+\ls5\ilvl0
+\fs28 \cf2 \kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	\uc0\u8226 	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 Mise \'e0 jour des singletons (
+\fs21 \cb1 \uc0\u8232 \cb3 get_voice_agent
+\fs28 ,\'a0
+\fs21 \cb1 \uc0\u8232 \cb3 get_rag_service
+\fs28 , etc.) pour instancier la version Ollama ou OpenAI selon la variable d'environnement.\cb1 \
+\ls5\ilvl0\cb3 \kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	\uc0\u8226 	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 Cette modification est non-destructive et permet de basculer en un clic.\cb1 \
+\pard\pardeftab720\sa120\partightenfactor0
+
+\fs24 \cf2 \cb3 3. Configuration de Llama 70B\
+\pard\tx220\tx720\pardeftab720\li720\fi-720\partightenfactor0
+\ls6\ilvl0
+\fs28 \cf2 \kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	\uc0\u8226 	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 Le code sera pr\'eat pour le mod\'e8le de 42 Go.\cb1 \
+\pard\tx220\tx720\pardeftab720\li720\fi-720\partightenfactor0
+\ls6\ilvl0
+\f1\b \cf2 \cb3 \kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	\uc0\u8226 	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 Note
+\f0\b0 \'a0: Le nom du mod\'e8le dans le code devra correspondre au nom dans Ollama (ex:\'a0
+\f2\fs25\fsmilli12600 \cf4 \cb5 \strokec4 llama3:70b
+\f0\fs28 \cf2 \cb3 \strokec2 ).\cb1 \
+\pard\pardeftab720\sa120\partightenfactor0
+
+\fs24 \cf2 \cb3 Plan de V\'e9rification\
+\pard\pardeftab720\sa60\partightenfactor0
+
+\fs21 \cf2 Tests en local\
+\pard\tx220\tx720\pardeftab720\li720\fi-720\partightenfactor0
+\ls7\ilvl0
+\fs28 \cf2 \kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	\uc0\u8226 	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 V\'e9rifier que l'API Ollama r\'e9pond sur\'a0
+\f2\fs25\fsmilli12600 \cf4 \cb5 \strokec4 http://localhost:11434
+\f0\fs28 \cf2 \cb3 \strokec2 .\cb1 \
+\ls7\ilvl0\cb3 \kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	\uc0\u8226 	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 Tester la classification d'intention sans connexion internet.\cb1 \
+\ls7\ilvl0\cb3 \kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	\uc0\u8226 	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 Valider la g\'e9n\'e9ration RAG avec les documents existants.\cb1 \
+}

@@ -1,0 +1,125 @@
+flowchart TD
+    %% --- ACTEURS ET INTERFACES ---
+    subgraph Acteurs ["👤 Acteurs"]
+        direction LR
+        SA["👑 Super Admin"]
+        AD["🏛️ Admin"]
+        PR["🎓 Professeur"]
+        ET["💻 Étudiant"]
+    end
+
+    subgraph UI ["🌐 Interface React"]
+        DashSA["⚙️ Dashboard Super Admin"]
+        DashAD["🏢 Dashboard Admin"]
+        DashPR["📚 Dashboard Professeur"]
+        Session["📽️ Session Live (Sync & Surlignage)"]
+    end
+
+    %% --- ROUTAGE CENTRAL ---
+    Gateway{{"🚪 API GATEWAY\n(Java Spring Cloud)"}}
+
+    %% --- MICROSERVICES ---
+    subgraph Services ["⚙️ Microservices Backend"]
+        Gardien["🛡️ Gardien\n(Auth & Cascade)"]
+        CourseSrv["📚 Course Service\n(Docs & Stats)"]
+        LiveSrv["📡 Live Service\n(WebSockets STOMP)"]
+        
+        subgraph FastAPI ["⚡ AI Engine (FastAPI)"]
+            Audio["🗣️ Transcription Audio"]
+            Orchestrator{"🧠 Routeur Cognitif\n(LLM)"}
+            
+            subgraph Intents ["Intentes IA"]
+                Nav["🧭 Navigation\n(Auto-Scroll)"]
+                RAG["🔍 RAG Textuel\n(Recherche PDF)"]
+                Vision["👁️ Image Clarifier\n(Agent Multimodal)"]
+            end
+            
+            LLM_Gen["🤖 LLM Génératif\n(OpenAI/Ollama)"]
+            Tavily["🔎 Tavily API\n(Recherche Web)"]
+        end
+    end
+
+    %% --- INFRASTRUCTURE ET DONNÉES ---
+    subgraph Data ["🗄️ Persistence & Broker"]
+        MongoDB[("🍃 MongoDB")]
+        Qdrant[("📊 Qdrant")]
+        Redis[("⚡ Redis / Celery Worker")]
+    end
+
+    %% Monitoring
+    subgraph MLOps ["📈 Monitoring & MLOps"]
+        Prometheus["🔥 Prometheus"]
+        Grafana["📊 Grafana"]
+    end
+
+    %% --- FLUX DE TRAITEMENT (CONNECTIONS) ---
+
+    %% 1. Entrées Utilisateurs (Séparation des Dashboards)
+    SA --> DashSA
+    PR --> DashPR
+    AD --> DashAD
+    ET & PR --> Session
+
+    %% 2. Routage vers Gateway (Distinction HTTP vs Voix)
+    DashPR & DashSA & DashAD -- "Requêtes HTTP / API" --> Gateway
+    Session -- "Commandes Vocales / WebSockets" --> Gateway
+
+    %% 3. Routage par le Gateway
+    Gateway -- "/auth/**" --> Gardien
+    Gateway -- "/api/courses/**" --> CourseSrv
+    Gateway -- "/api/ai/**" --> Audio
+    Gateway -- "/api/livesession/**" --> LiveSrv
+
+    %% 4. Cycle de Vie d'une Requête IA (Live Session Flow)
+    Audio -- "Texte" --> Orchestrator
+    Orchestrator -- "Navigation" --> Nav
+    Orchestrator -- "Sémantique" --> RAG
+    Orchestrator -- "Visuel" --> Vision
+
+    RAG -- "Vecteurs" --> Qdrant
+    Qdrant -. "Contexte PDF" .-> LLM_Gen
+    
+    %% Flux Image Clarifier détaillé
+    Vision -- "1. Image Base64 + Question" --> LLM_Gen
+    LLM_Gen -. "2. Mots-clés de recherche" .-> Vision
+    Vision -- "3. Recherche web" --> Tavily
+    Tavily -. "4. Images Alternatives" .-> Vision
+    Vision -- "5. Explication Pédagogique" --> LLM_Gen
+    
+    %% 5. Retour et Synchronisation
+    LLM_Gen -- "Réponse Vocale/Texte" --> LiveSrv
+    Nav -- "Ordre de Défilement" --> LiveSrv
+    
+    LiveSrv == "Broadcasting (Scroll, Surlignage, Réponse)" ==> Session
+
+    %% 6. Maintenance & Bases de Données
+    Gardien -- "Lecture/Ecriture Users" --> MongoDB
+    CourseSrv -- "Cours & Fichiers GridFS" --> MongoDB
+    Gardien -- "Purge Cascade" --> CourseSrv
+
+    %% 7. Flux IA & Indexation
+    CourseSrv -- "Nouveau PDF" --> Redis
+    Redis -- "Task Queue" --> Celery["⚙️ Celery Worker\n(Indexation)"]
+    Celery -- "Embeddings" --> Qdrant
+    Celery -- "Status Update" --> MongoDB
+
+    %% 8. Monitoring Flows
+    Services -- "Metrics" --> Prometheus
+    Prometheus -- "Visualisation" --> Grafana
+
+    %% Styles
+    classDef actor fill:#f5f5f5,stroke:#333,stroke-width:2px;
+    classDef gateway fill:#ff9800,stroke:#e65100,stroke-width:3px,color:#fff;
+    classDef service fill:#2196f3,stroke:#0d47a1,stroke-width:2px,color:#fff;
+    classDef ai fill:#f3e5f5,stroke:#8e24aa,stroke-width:2px,color:#4a148c;
+    classDef data fill:#4caf50,stroke:#1b5e20,stroke-width:2px,color:#fff;
+    classDef mlops fill:#9c27b0,stroke:#4a148c,stroke-width:2px,color:#fff;
+    classDef ext fill:#eceff1,stroke:#607d8b,stroke-width:2px,color:#263238;
+
+    class SA,AD,PR,ET actor;
+    class Gateway gateway;
+    class Gardien,CourseSrv,LiveSrv service;
+    class Audio,Orchestrator,Nav,RAG,Vision,LLM_Gen ai;
+    class Tavily ext;
+    class MongoDB,Qdrant,Redis,Celery data;
+    class Prometheus,Grafana mlops;

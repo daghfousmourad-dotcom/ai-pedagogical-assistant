@@ -1,0 +1,238 @@
+
+services:
+  # Base de données pour l'identité et les cours
+  mongodb:
+    image: mongo:latest
+    container_name: radiology-mongodb
+    restart: always
+    platform: linux/arm64
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+      - /Volumes/MonSSD/pfe/test-microservices/init-db.js:/docker-entrypoint-initdb.d/init-db.js:ro
+
+  # Base de données vectorielle pour les services IA
+  qdrant:
+    image: qdrant/qdrant:latest
+    container_name: radiology-qdrant
+    restart: always
+    platform: linux/arm64
+    ports:
+      - "6333:6333" # API REST
+      - "6334:6334" # gRPC
+    volumes:
+      - qdrant_data:/qdrant/storage
+
+  # Cache & Message Broker (Redis avec Persistance AOF)
+  redis:
+    image: redis:latest
+    container_name: radiology-redis
+    command: redis-server --appendonly yes
+    restart: always
+    platform: linux/arm64
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+
+  # API Web FastAPI
+  fastapi-web:
+    build: 
+      context: ./FastAPI
+      dockerfile: Dockerfile
+    container_name: fastapi-web
+    command: uvicorn main:app --host 0.0.0.0 --port 5005 --ws websockets --http h11
+    restart: always
+    ports:
+      - "5005:5005"
+    env_file:
+      - .env
+    volumes:
+      - ./FastAPI:/app:rw
+      # Montage des caches IA et des uploads avec chemins absolus identiques à l'hôte
+      - /Volumes/MonSSD/pfe/ai_models_cache:/Volumes/MonSSD/pfe/ai_models_cache
+      - /Volumes/MonSSD/pfe/test-microservices/shared_uploads:/Volumes/MonSSD/pfe/test-microservices/shared_uploads
+      - /Volumes/MonSSD/pfe/test-microservices/shared_uploads:/app/uploads
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      - REDIS_URL=redis://redis:6379/0
+      - MONGO_URI=mongodb://mongodb:27017
+      - QDRANT_URL=http://qdrant:6333
+      - FASTEMBED_CACHE_PATH=/Volumes/MonSSD/pfe/ai_models_cache/fastembed
+      # Host spécial pour accéder aux microservices Spring Boot depuis Docker
+      - COURSE_SERVICE_URL=http://host.docker.internal:8082 
+      - OLLAMA_URL=http://host.docker.internal:11434
+    depends_on:
+      - mongodb
+      - qdrant
+      - redis
+
+  # Worker Asynchrone Celery
+  fastapi-celery-worker:
+    build: 
+      context: ./FastAPI
+      dockerfile: Dockerfile
+    container_name: fastapi-celery-worker
+    command: celery -A celery_worker.celery_app worker --loglevel=info -E --concurrency=1
+    restart: always
+    env_file:
+      - .env
+    volumes:
+      - ./FastAPI:/app:rw
+      # Montage identique pour le worker celery
+      - /Volumes/MonSSD/pfe/ai_models_cache:/Volumes/MonSSD/pfe/ai_models_cache
+      - /Volumes/MonSSD/pfe/test-microservices/shared_uploads:/Volumes/MonSSD/pfe/test-microservices/shared_uploads
+      - /Volumes/MonSSD/pfe/test-microservices/shared_uploads:/app/uploads
+    environment:
+      - REDIS_URL=redis://redis:6379/0
+      - MONGO_URI=mongodb://mongodb:27017
+      - QDRANT_URL=http://qdrant:6333
+      - FASTEMBED_CACHE_PATH=/Volumes/MonSSD/pfe/ai_models_cache/fastembed
+      - COURSE_SERVICE_URL=http://host.docker.internal:8082
+      - PROMETHEUS_MULTIPROC_DIR=/tmp/metrics
+      - OLLAMA_URL=http://host.docker.internal:11434
+    depends_on:
+      - mongodb
+      - qdrant
+      - redis
+      - fastapi-web
+
+  # Monitoring : Prometheus
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus
+    restart: always
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./monitoring/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - prometheus_data:/prometheus
+
+  # Monitoring : Celery Exporter
+  celery-exporter:
+    image: danihodovic/celery-exporter:latest
+    container_name: celery-exporter
+    restart: always
+    command: --broker-url=redis://redis:6379/0
+    ports:
+      - "9808:9808"
+    depends_on:
+      - redis
+
+  # Monitoring : Grafana
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
+    restart: always
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+      - GF_SECURITY_ALLOW_EMBEDDING=true
+      - GF_AUTH_ANONYMOUS_ENABLED=true
+      - GF_AUTH_ANONYMOUS_ORG_ROLE=Admin
+    volumes:
+      - grafana_data:/var/lib/grafana
+    depends_on:
+      - prometheus
+
+  # -------------------------------------------------------------
+  # MICROSERVICES JAVA & FRONTEND (Profil "all" ou "java")
+  # -------------------------------------------------------------
+
+  # Microservice : Le Gardien (Authentification & Sécurité)
+  gardien-service:
+    build:
+      context: ./Gardien
+      dockerfile: Dockerfile
+    container_name: radiology-gardien
+    restart: always
+    ports:
+      - "8081:8081"
+    environment:
+      - SPRING_DATA_MONGODB_HOST=mongodb
+      - SPRING_DATA_MONGODB_PORT=27017
+      - COURSE_SERVICE_URL=http://course-service:8082
+    depends_on:
+      - mongodb
+    profiles: ["all", "java"]
+
+  # Microservice : Course Service (Gestion documentaire & cours)
+  course-service:
+    build:
+      context: ./course-service
+      dockerfile: Dockerfile
+    container_name: radiology-course-service
+    restart: always
+    ports:
+      - "8082:8082"
+    environment:
+      - SPRING_DATA_MONGODB_HOST=mongodb
+      - SPRING_DATA_MONGODB_PORT=27017
+      - FASTAPI_URL=http://fastapi-web:5005
+      - GARDIEN_SERVICE_URL=http://gardien-service:8081
+    volumes:
+      - ./shared_uploads:/app/shared_uploads
+    depends_on:
+      - mongodb
+    profiles: ["all", "java"]
+
+  # Microservice : Live Service (Sessions & WebSockets)
+  live-service:
+    build:
+      context: ./live-service
+      dockerfile: Dockerfile
+    container_name: radiology-live-service
+    restart: always
+    ports:
+      - "8085:8085"
+    environment:
+      - SPRING_DATA_MONGODB_HOST=mongodb
+      - SPRING_DATA_MONGODB_PORT=27017
+      - FASTAPI_URL=http://fastapi-web:5005
+    depends_on:
+      - mongodb
+    profiles: ["all", "java"]
+
+  # Microservice : Gateway Service (Passerelle API centrale)
+  gateway-service:
+    build:
+      context: ./gateway-service
+      dockerfile: Dockerfile
+    container_name: radiology-gateway
+    restart: always
+    ports:
+      - "8080:8080"
+    environment:
+      - GARDIEN_SERVICE_URL=http://gardien-service:8081
+      - COURSE_SERVICE_URL=http://course-service:8082
+      - AI_SERVICE_URL=http://fastapi-web:5005
+      - LIVE_SERVICE_URL=http://live-service:8085
+    depends_on:
+      - gardien-service
+      - course-service
+      - live-service
+      - fastapi-web
+    profiles: ["all", "java"]
+
+  # Frontend Web : React / Vite
+  interfaces-web:
+    build:
+      context: ./Interfaces
+      dockerfile: Dockerfile
+    container_name: radiology-frontend
+    restart: always
+    ports:
+      - "5173:80"
+    depends_on:
+      - gateway-service
+    profiles: ["all", "frontend"]
+
+volumes:
+  mongo_data:
+  qdrant_data:
+  redis_data:
+  prometheus_data:
+  grafana_data:
+  ia_metrics_data:
